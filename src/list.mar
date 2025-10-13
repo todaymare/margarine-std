@@ -18,7 +18,7 @@ impl<T> [T] {
     }
 
 
-    fn len(self): int { len_list(self) }
+    fn len(self): int { ffi::len_list(self) }
 
 
     fn iter(self): std::iter::Iter<T> {
