@@ -1,0 +1,8 @@
+extern {
+    fn print_raw<T>(val: T, ty_id: int)
+}
+
+
+fn print<T>(val: T) {
+    print_raw(val, type_id::<T>())
+}
