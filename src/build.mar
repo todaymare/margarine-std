@@ -12,7 +12,7 @@ type CompilationUnit
 
 impl CompilationUnit {
     fn init(): CompilationUnit {
-        ffi::init_compilation_unit()
+        ffi::compilation_unit_init()
     }
 
 
