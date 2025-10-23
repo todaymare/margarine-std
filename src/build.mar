@@ -11,17 +11,17 @@ type CompilationUnit
 
 
 impl CompilationUnit {
-    pub fn init(): CompilationUnit {
+    fn init(): CompilationUnit {
         ffi::init_compilation_unit()
     }
 
 
-    pub fn import(self, name: str, path: str) {
+    fn import(self, name: str, path: str) {
         ffi::compilation_unit_import_repo(self, name, path)
     }
 
 
-    pub fn build(self) {
+    fn build(self) {
         ffi::compilation_unit_build(self)
     }
 }
