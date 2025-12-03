@@ -2,6 +2,7 @@ mod duration;
 mod hashmap;
 mod iter;
 mod list;
+mod io;
 
 
 mod ffi {

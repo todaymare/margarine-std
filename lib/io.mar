@@ -1,0 +1,10 @@
+mod ffi {
+    extern {
+        fn io_read_line(): Result<str, str>
+    }
+}
+
+
+fn read_line(): Result<str, str> {
+    ffi::io_read_line()
+}
