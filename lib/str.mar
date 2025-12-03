@@ -1,0 +1,55 @@
+type Lines;
+
+impl str {
+    fn lines(self): Lines {
+        extern {
+            fn str_lines_iter(s: str): Lines
+        }
+
+        str_lines_iter(self)
+    }
+
+
+    fn split_at(self, idx: int): (str, str) {
+        extern {
+            fn str_split_at(s: str, idx: int): (str, str)
+        }
+
+        str_split_at(self, idx)
+    }
+    
+
+    fn parse<T>(self): Option<T> {
+        extern {
+            fn str_parse<T>(s: str, ty: int): Option<T>
+        }
+
+        str_parse(self, type_id::<T>())
+    }
+
+
+    fn is_empty(self): bool {
+        self.len() == 0
+    }
+
+
+    fn len(self): int {
+        extern {
+            fn str_len(s: str): int
+        }
+
+        str_len(self)
+    }
+}
+
+
+impl Lines {
+    fn __next__(self): Option<str> {
+        extern {
+            fn str_lines_iter_next(s: Lines): Option<str>
+        }
+
+        str_lines_iter_next(self)
+    }
+}
+
