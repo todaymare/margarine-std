@@ -17,6 +17,12 @@ mod ffi {
 }
 
 
+fn println<T>(val: T) {
+    ffi::print_raw(val, type_id::<T>())
+    ffi::print_raw("\n", type_id::<str>())
+}
+
+
 fn print<T>(val: T) {
     ffi::print_raw(val, type_id::<T>())
 }
