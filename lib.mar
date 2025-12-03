@@ -1,3 +1,9 @@
+mod duration;
+mod hashmap;
+mod iter;
+mod list;
+
+
 mod ffi {
     extern {
         fn print_raw<T>(val: T, ty_id: int)
