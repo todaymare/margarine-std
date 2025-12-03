@@ -28,4 +28,19 @@ impl<T> Iter<T> {
             }
         }
     }
+
+
+    fn for_each(self, f: fn(T)) {
+        for _ in self.map(f) {}
+    }
+
+
+    fn map<A>(self, f: fn(T): A): Iter<A> {
+        Iter {
+            next: || {
+                var result = self.__next__()?;
+                some(f(result))
+            }
+        }
+    }
 }

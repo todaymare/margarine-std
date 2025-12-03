@@ -40,6 +40,45 @@ impl str {
 
         str_len(self)
     }
+
+
+    fn split(self, delimiter: str): Iter<str> {
+        var state = SplitState {
+            base: self,
+            del : delimiter,
+        };
+
+
+        Iter {
+            next: || {
+                var split = state.base.split_once(delimiter);
+                if split.is_some() {
+                    var split = split!;
+                    state.base = split.1;
+                    some(split.0)
+                } else {
+                    none()
+                }
+            }
+        }
+    }
+
+    fn split_once(self, delimiter: str): Option<(str, str)> {
+        extern {
+            fn str_split_once(s: str, delimiter: str): Option<(str, str)>
+        }
+
+        str_split_once(self, delimiter)
+    }
+
+
+    fn slice(self, range: Range): str {
+        extern {
+            fn str_slice(s: str, min: int, max: int): str
+        }
+
+        str_slice(self, range.min, range.max)
+    }
 }
 
 
@@ -52,4 +91,13 @@ impl Lines {
         str_lines_iter_next(self)
     }
 }
+
+
+
+struct SplitState {
+    base: str,
+    del : str,
+
+}
+
 

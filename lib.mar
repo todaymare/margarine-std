@@ -15,8 +15,12 @@ mod ffi {
 
         fn int_to_str(value: int): str
         fn float_to_str(value: float): str
+        fn panic(s: str)
+
     }
 }
+
+use ffi::panic;
 
 
 fn println<T>(val: T) {
@@ -27,6 +31,11 @@ fn println<T>(val: T) {
 
 fn print<T>(val: T) {
     ffi::print_raw(val, type_id::<T>());
+}
+
+
+fn assert(value: bool, msg: str) {
+    if !value { panic(msg) }
 }
 
 
@@ -101,6 +110,14 @@ impl<T> Option<T> {
             none => {
                 none()
             }
+        }
+    }
+
+
+    fn is_some(self): bool {
+        match self {
+            some => true,
+            none => false,
         }
     }
 }
