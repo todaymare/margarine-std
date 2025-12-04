@@ -43,4 +43,31 @@ impl<T> Iter<T> {
             }
         }
     }
+
+
+    fn filter(self, cond: fn(T): bool): Iter<T> {
+        Iter {
+            next: || {
+                loop {
+                    var value = self.__next__()?;
+                    if cond(value) {
+                        return some(value)
+                    }
+                }
+
+                none()
+            }
+        }
+    }
 }
+
+
+impl Iter<int> {
+    fn sum(self): int {
+        var sum = (0,);
+        self.for_each(|n| { sum.0 += n });
+        sum.0
+    }
+}
+
+

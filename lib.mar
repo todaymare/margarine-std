@@ -49,6 +49,13 @@ impl Range {
         }
 
     }
+
+    
+    fn iter(self): Iter<int> {
+        Iter {
+            next: || self.__next__(),
+        }
+    }
 }
 
 
