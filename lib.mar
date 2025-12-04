@@ -21,6 +21,7 @@ mod ffi {
 }
 
 use ffi::panic;
+use iter::Iter;
 
 
 fn println<T>(val: T) {
