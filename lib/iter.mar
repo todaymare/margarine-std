@@ -59,6 +59,12 @@ impl<T> Iter<T> {
             }
         }
     }
+
+
+    fn skip(self, n: int): Iter<T> {
+        for _ in 0..n { self.__next__(); }
+        self
+    }
 }
 
 

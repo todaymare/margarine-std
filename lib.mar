@@ -98,6 +98,28 @@ impl int {
     fn to_str(self): str {
         ffi::int_to_str(self)
     }
+
+
+    fn max(self, oth: int): int {
+        if self > oth { self }
+        else { oth }
+    }
+
+
+    fn min(self, oth: int): int {
+        if self < oth { self }
+        else { oth }
+    }
+
+
+    fn pow(self, exp: int): int {
+        var count = 1;
+        for _ in 0..exp {
+            count *= self;
+        }
+        count
+    }
+
 }
 
 

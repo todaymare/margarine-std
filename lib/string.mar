@@ -3,13 +3,18 @@ use iter::Iter;
 type Lines;
 
 impl str {
-    fn lines(self): Lines {
+    fn lines(self): Iter<str> {
         extern {
             fn str_lines_iter(s: str): Lines
         }
 
-        str_lines_iter(self)
+        var lines = str_lines_iter(self);
+        Iter {
+            next: || lines.__next__(),
+        }
     }
+
+
 
 
     fn split_at(self, idx: int): (str, str) {
@@ -90,6 +95,37 @@ impl str {
 
         str_slice(self, range.min, range.max)
     }
+
+
+    fn nth(self, n: int): str {
+        extern {
+            fn str_nth(s: str, n: int): str
+        }
+
+        str_nth(self, n)
+    }
+
+
+    fn chars(self): Iter<str> {
+        var chars = Chars { s: self };
+        Iter {
+            next: || {
+                if chars.s.is_empty() {
+                    return none()
+                }
+
+                if chars.s.len() == 1 {
+                    var s = chars.s;
+                    chars.s = "";
+                    return some(s);
+                }
+
+                var ch, rest = chars.s.split_at(1);
+                chars.s = rest;
+                some(ch)
+            }
+        }
+    }
 }
 
 
@@ -112,3 +148,6 @@ struct SplitState {
 }
 
 
+struct Chars {
+    s: str,
+}
