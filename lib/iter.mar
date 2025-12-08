@@ -65,6 +65,21 @@ impl<T> Iter<T> {
         for _ in 0..n { self.__next__(); }
         self
     }
+
+
+    fn count(self): int {
+        var cnt = 0;
+        for _ in self {
+            cnt += 1;
+        }
+        cnt
+    }
+
+
+    fn nth(self, n: int): Option<T> {
+        self.skip(n).__next__()
+    }
+
 }
 
 
