@@ -1,37 +1,39 @@
 use iter::Iter;
 
+mod ffi {
+    extern {
+    fn str_lines_iter(s: str): Lines
+    fn str_split_at(s: str, idx: int): (str, str)
+    fn str_parse(s: str, ty: int): Option<any>
+    fn str_len(s: str): int
+    fn str_split_once(s: str, delimiter: str): Option<(str, str)>
+    fn str_slice(s: str, min: int, max: int): str
+    fn str_nth(s: str, n: int): str
+    fn str_lines_iter_next(s: Lines): Option<str>
+    }
+}
+
 type Lines;
 
 impl str {
     fn lines(self): Iter<str> {
-        extern {
-            fn str_lines_iter(s: str): Lines
-        }
-
-        var lines = str_lines_iter(self);
+        var lines = ffi::str_lines_iter(self);
         Iter {
             next: || lines.__next__(),
         }
     }
 
 
-
-
     fn split_at(self, idx: int): (str, str) {
-        extern {
-            fn str_split_at(s: str, idx: int): (str, str)
-        }
-
-        str_split_at(self, idx)
+        ffi::str_split_at(self, idx)
     }
     
 
     fn parse<T>(self): Option<T> {
-        extern {
-            fn str_parse<T>(s: str, ty: int): Option<T>
-        }
-
-        str_parse(self, type_id::<T>())
+        ffi::str_parse(self, $type_id::<T>())
+            .map(|n| {
+                $downcast_any(n)!
+            })
     }
 
 
@@ -41,11 +43,7 @@ impl str {
 
 
     fn len(self): int {
-        extern {
-            fn str_len(s: str): int
-        }
-
-        str_len(self)
+        ffi::str_len(self)
     }
 
 
@@ -80,29 +78,17 @@ impl str {
 
 
     fn split_once(self, delimiter: str): Option<(str, str)> {
-        extern {
-            fn str_split_once(s: str, delimiter: str): Option<(str, str)>
-        }
-
-        str_split_once(self, delimiter)
+        ffi::str_split_once(self, delimiter)
     }
 
 
     fn slice(self, range: Range): str {
-        extern {
-            fn str_slice(s: str, min: int, max: int): str
-        }
-
-        str_slice(self, range.min, range.max)
+        ffi::str_slice(self, range.min, range.max)
     }
 
 
     fn nth(self, n: int): str {
-        extern {
-            fn str_nth(s: str, n: int): str
-        }
-
-        str_nth(self, n)
+        ffi::str_nth(self, n)
     }
 
 
@@ -131,11 +117,7 @@ impl str {
 
 impl Lines {
     fn __next__(self): Option<str> {
-        extern {
-            fn str_lines_iter_next(s: Lines): Option<str>
-        }
-
-        str_lines_iter_next(self)
+        ffi::str_lines_iter_next(self)
     }
 }
 

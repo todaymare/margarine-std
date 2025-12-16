@@ -10,3 +10,4 @@ impl<K, V> HashMap<K, V> {
         fn "hashmap_retain" remove<K, V>(hashmap: HashMap<K, V>, key: K): Option<V>
     }
 }
+

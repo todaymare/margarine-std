@@ -1,39 +1,41 @@
-mod duration;
-mod hashmap;
 mod iter;
-mod list;
+mod duration;
 mod io;
 mod string;
-
+mod list;
 
 mod ffi {
     extern {
-        fn print_raw<T>(val: T, ty_id: int)
-
-        fn new_any<T>(value: T, type_id: int): any 
-        fn downcast_any<T>(ptr: any, target: int): Option<T>
+        fn print_raw(val: any)
+        fn "margarineAbort" abort(): !
 
         fn int_to_str(value: int): str
         fn float_to_str(value: float): str
-        fn panic(s: str)
-
     }
 }
 
-use ffi::panic;
 use iter::Iter;
+
+fn print<T>(val: T) {
+    ffi::print_raw($any(val));
+}
 
 
 fn println<T>(val: T) {
-    ffi::print_raw(val, type_id::<T>());
-    ffi::print_raw("\n", type_id::<str>());
+    print(val);
+    print("\n");
 }
 
 
-fn print<T>(val: T) {
-    ffi::print_raw(val, type_id::<T>());
+fn type_id_of<T>(val: T): int {
+    $type_id::<T>()
 }
 
+
+fn panic(msg: str) : ! {
+    println(msg);
+    ffi::abort()
+}
 
 fn assert(value: bool, msg: str) {
     if !value { panic(msg) }
@@ -51,12 +53,13 @@ impl Range {
 
     }
 
-    
+
     fn iter(self): Iter<int> {
         Iter {
-            next: || self.__next__(),
+            next: || self.__next__()
         }
     }
+
 }
 
 
@@ -67,25 +70,6 @@ impl<T> Box<T> {
     fn new(value: T): Box<T> { Box { value } }
 }
 
-
-type any
-
-
-impl any {
-    fn from<T>(value: T): any {
-        ffi::new_any(value, type_id::<T>())
-    }
-
-
-    fn cast<T>(self): Option<T> {
-        ffi::downcast_any::<T>(self, type_id::<T>())
-    }
-}
-
-
-fn type_id_of<T>(val: T): int {
-    type_id::<T>()
-}
 
 
 impl int {
@@ -151,5 +135,6 @@ impl<T> Option<T> {
         }
     }
 }
+
 
 

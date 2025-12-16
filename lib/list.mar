@@ -1,24 +1,24 @@
 mod ffi {
     extern {
-        fn push_list<T>(list: [T], value: T)
-        fn pop_list<T>(list: [T]): Option<T>
-        fn len_list<T>(list: [T]): int
+        fn list_push<T>(list: [T], value: any, elem_size: int)
+        fn list_pop<T>(list: [T], elem_size: int): Option<T>
+        fn list_len<T>(list: [T]): int
     }
 }
 
 
 impl<T> [T] {
     fn push(self, value: T) {
-        ffi::push_list(self, value)
+        ffi::list_push(self, $any(value), $sizeof::<T>())
     }
 
 
     fn pop(self): Option<T> {
-        ffi::pop_list(self)
+        ffi::list_pop(self, $sizeof::<T>())
     }
 
 
-    fn len(self): int { ffi::len_list(self) }
+    fn len(self): int { ffi::list_len(self) }
 
 
     fn iter(self): std::iter::Iter<T> {

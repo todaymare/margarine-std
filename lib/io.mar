@@ -1,14 +1,9 @@
 mod ffi {
     extern {
-        fn io_read_line(): Result<str, str>
-        fn "io_read_file" read_file(path: str): str
-
+        fn "io_read_line" read_line(): Result<str, str>
+        fn "io_read_file" read_file(path: str): Result<str, str>
     }
 }
 
 use ffi::read_file;
-
-
-fn read_line(): Result<str, str> {
-    ffi::io_read_line()
-}
+use ffi::read_line;
