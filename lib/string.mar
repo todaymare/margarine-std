@@ -10,6 +10,8 @@ mod ffi {
     fn str_slice(s: str, min: int, max: int): str
     fn str_nth(s: str, n: int): str
     fn str_lines_iter_next(s: Lines): Option<str>
+    fn str_cmp(a: str, b: str): bool
+    fn str_hash(s: str, hasher: Hasher)
     }
 }
 
@@ -132,4 +134,17 @@ struct SplitState {
 
 struct Chars {
     s: str,
+}
+
+
+impl Eq for str {
+    fn eq(self, oth: Self): bool {
+        ffi::str_cmp(self, oth)
+    }
+}
+
+
+impl hashmap::Hash for str {
+    fn hash(self, hasher: hashmap::Hasher) {
+    }
 }

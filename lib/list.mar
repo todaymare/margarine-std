@@ -3,6 +3,7 @@ mod ffi {
         fn list_push<T>(list: [T], value: any, elem_size: int)
         fn list_pop<T>(list: [T], elem_size: int): Option<T>
         fn list_len<T>(list: [T]): int
+        fn list_clear<T>(list: [T])
     }
 }
 
@@ -19,6 +20,9 @@ impl<T> [T] {
 
 
     fn len(self): int { ffi::list_len(self) }
+
+
+    fn clear(self) { ffi::list_clear(self) }
 
 
     fn iter(self): std::iter::Iter<T> {

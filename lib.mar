@@ -3,6 +3,7 @@ mod duration;
 mod io;
 mod string;
 mod list;
+mod hashmap;
 
 mod ffi {
     extern {
@@ -137,4 +138,34 @@ impl<T> Option<T> {
 }
 
 
+impl Eq for int {
+    fn eq(self, oth: Self): bool {
+        self == oth
+    }
+}
+
+impl Eq for float {
+    fn eq(self, oth: Self): bool {
+        self == oth
+    }
+}
+
+impl Eq for bool {
+    fn eq(self, oth: Self): bool {
+        self == oth
+    }
+}
+
+impl Eq for () {
+    fn eq(self, oth: Self): bool {
+        self == oth
+    }
+}
+
+impl<T: Eq> Eq for [T] {
+    fn eq(self, oth: Self): bool {
+        self.iter().zip(oth.iter())
+            .all(|a: (T, T)| a.0 == a.1)
+    }
+}
 

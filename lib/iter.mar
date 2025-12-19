@@ -80,6 +80,34 @@ impl<T> Iter<T> {
         self.skip(n).__next__()
     }
 
+
+    fn zip<A>(self, oth: Iter<A>): Iter<(T, A)> {
+        Iter {
+            next: || {
+                var a = self.__next__()?;
+                var b = oth.__next__()?;
+                some((a, b))
+            }
+        }
+    }
+
+
+    fn all(self, f: fn(T): bool): bool {
+        for value in self {
+            if !f(value) { return false }
+        }
+        
+        true
+    }
+
+
+    fn any(self, f: fn(T): bool): bool {
+        for value in self {
+            if f(value) { return false }
+        }
+        
+        false
+    }
 }
 
 
@@ -90,5 +118,4 @@ impl Iter<int> {
         sum.0
     }
 }
-
 
