@@ -103,7 +103,7 @@ impl<T> Iter<T> {
 
     fn any(self, f: fn(T): bool): bool {
         for value in self {
-            if f(value) { return false }
+            if f(value) { return true }
         }
         
         false
