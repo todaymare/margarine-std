@@ -3,6 +3,11 @@ fn random<T: Rand>(): T {
 }
 
 
+fn random_range(range: Range): int {
+    (random::<float>() * range.len() as float) as int + range.min
+}
+
+
 trait Rand {
     fn random(): Self
 }
@@ -19,6 +24,13 @@ impl Rand for float {
     fn random(): Self {
         extern { fn random_float(): float }
         random_float()
+    }
+}
+
+
+impl Rand for bool {
+    fn random(): Self {
+        rand::random::<int>() % 2 == 0
     }
 }
 
