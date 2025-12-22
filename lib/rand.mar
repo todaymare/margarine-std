@@ -1,0 +1,24 @@
+fn random<T: Rand>(): T {
+    T::random()
+}
+
+
+trait Rand {
+    fn random(): Self
+}
+
+
+impl Rand for int {
+    fn random(): Self {
+        extern { fn random_int(): int }
+        random_int()
+    }
+}
+
+impl Rand for float {
+    fn random(): Self {
+        extern { fn random_float(): float }
+        random_float()
+    }
+}
+

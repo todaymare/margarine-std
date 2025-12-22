@@ -4,6 +4,7 @@ mod io;
 mod string;
 mod list;
 mod hashmap;
+mod rand;
 
 mod ffi {
     extern {
